@@ -1,0 +1,134 @@
+/* ===== Container ===== */
+.home-appliances-container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  background: linear-gradient(135deg, #fefce8 0%, #e0f2fe 100%);
+  border-radius: 6px;
+}
+
+/* Header */
+.home-appliances-header {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.home-appliances-header h2 {
+  font-size: 1.8rem;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.home-appliances-header p {
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+/* Loading / Empty text */
+.home-appliances-loading,
+.home-appliances-empty {
+  text-align: center;
+  padding: 20px 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+/* ===== DEFAULT: grid layout (tablet + desktop) ===== */
+.home-appliances-list {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* =========================
+   Small Mobile (0–575px)
+   → horizontal row with scroll
+========================= */
+@media (max-width: 575px) {
+  .home-appliances-container {
+    padding: 12px;
+    border-radius: 0;
+  }
+
+  .home-appliances-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .home-appliances-header p {
+    font-size: 0.9rem;
+  }
+
+  .home-appliances-list {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory;
+
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .home-appliances-list::-webkit-scrollbar {
+    display: none; /* Chrome / Safari */
+  }
+
+  .card-container {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+}
+
+/* =========================
+   Larger Mobile / Small Tablet
+   (576–767px)
+========================= */
+@media (min-width: 576px) and (max-width: 767px) {
+  .home-appliances-container {
+    padding: 16px;
+  }
+
+  .home-appliances-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .home-appliances-list {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+/* =========================
+   Tablet (768–1023px)
+========================= */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .home-appliances-container {
+    padding: 18px 22px;
+  }
+
+  .home-appliances-header h2 {
+    font-size: 1.7rem;
+  }
+
+  .home-appliances-list {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+/* =========================
+   Laptop & Desktop (>=1024px)
+========================= */
+@media (min-width: 1024px) {
+  .home-appliances-container {
+    padding: 20px 28px;
+  }
+
+  .home-appliances-header h2 {
+    font-size: 1.9rem;
+  }
+
+  .home-appliances-list {
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}

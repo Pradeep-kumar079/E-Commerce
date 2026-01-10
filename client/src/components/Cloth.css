@@ -1,0 +1,136 @@
+/* ===== Section Container ===== */
+.cloths-section {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+/* Header text */
+.cloths-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.cloths-header h2 {
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.cloths-header p {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+/* Loading & Empty states */
+.cloths-loading,
+.cloths-empty {
+  text-align: center;
+  color: #777;
+  font-size: 0.95rem;
+  margin-top: 20px;
+}
+
+/* ===== DEFAULT: Grid layout (tablet + desktop etc.) ===== */
+.cloths-list {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* =========================
+   Small Mobile (0–575px)
+   → horizontal row with scroll
+   ========================= */
+@media (max-width: 575px) {
+  .cloths-section {
+    padding: 12px;
+  }
+
+  .cloths-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .cloths-header p {
+    font-size: 0.9rem;
+  }
+
+  .cloths-list {
+    display: flex;               /* row layout */
+    flex-direction: row;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+
+    /* smooth horizontal scroll */
+    scroll-snap-type: x mandatory;
+
+    /* hide scrollbar */
+    scrollbar-width: none;       /* Firefox */
+  }
+
+  .cloths-list::-webkit-scrollbar {
+    display: none;               /* Chrome / Safari */
+  }
+
+  /* each card acts like a slide */
+  .card-container {
+    flex: 0 0 auto;     
+    width: 220px;         /* don't shrink */
+    scroll-snap-align: start;
+  }
+}
+
+/* =========================
+   Larger Mobile / Small Tablet
+   (576–767px)
+   ========================= */
+@media (min-width: 576px) and (max-width: 767px) {
+  .cloths-section {
+    padding: 16px;
+  }
+
+  .cloths-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .cloths-list {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+/* =========================
+   Tablet (768–1023px)
+   ========================= */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .cloths-section {
+    padding: 18px 22px;
+  }
+
+  .cloths-header h2 {
+    font-size: 1.7rem;
+  }
+
+  .cloths-list {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+/* =========================
+   Laptop & Desktop (>=1024px)
+   ========================= */
+@media (min-width: 1024px) {
+  .cloths-section {
+    padding: 20px 32px;
+  }
+
+  .cloths-header h2 {
+    font-size: 1.9rem;
+  }
+
+  .cloths-list {
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}

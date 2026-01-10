@@ -1,0 +1,135 @@
+/* ===== Container ===== */
+.electronics-container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  background: linear-gradient(135deg, #f9fafb 0%, #e5f0ff 100%);
+  border-radius: 6px;
+}
+
+/* Header */
+.electronics-header {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.electronics-header h2 {
+  font-size: 1.8rem;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.electronics-header p {
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+/* Loading / Empty text */
+.electronics-loading,
+.electronics-empty {
+  text-align: center;
+  padding: 20px 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+/* ===== DEFAULT: grid layout (tablet + desktop) ===== */
+.electronics-list {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* =========================
+   Small Mobile (0–575px)
+   → horizontal row with scroll
+========================= */
+@media (max-width: 575px) {
+  .electronics-container {
+    padding: 12px;
+    border-radius: 0;
+  }
+
+  .electronics-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .electronics-header p {
+    font-size: 0.9rem;
+  }
+
+  .electronics-list {
+    display: flex;              /* row layout */
+    flex-direction: row;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory;
+
+    scrollbar-width: none;      /* Firefox hide scrollbar */
+  }
+
+  .electronics-list::-webkit-scrollbar {
+    display: none;              /* Chrome / Safari hide scrollbar */
+  }
+
+  /* Each card acts like a slide */
+  .card-container {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+}
+
+/* =========================
+   Larger Mobile / Small Tablet
+   (576–767px)
+========================= */
+@media (min-width: 576px) and (max-width: 767px) {
+  .electronics-container {
+    padding: 16px;
+  }
+
+  .electronics-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .electronics-list {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+/* =========================
+   Tablet (768–1023px)
+========================= */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .electronics-container {
+    padding: 18px 22px;
+  }
+
+  .electronics-header h2 {
+    font-size: 1.7rem;
+  }
+
+  .electronics-list {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+/* =========================
+   Laptop & Desktop (>=1024px)
+========================= */
+@media (min-width: 1024px) {
+  .electronics-container {
+    padding: 20px 28px;
+  }
+
+  .electronics-header h2 {
+    font-size: 1.9rem;
+  }
+
+  .electronics-list {
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}

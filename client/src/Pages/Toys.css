@@ -1,0 +1,73 @@
+.toys-container {
+  background-color: #fdeef3;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  overflow-y: auto;
+  border: 1px solid #b2aeaf;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.toys-title {
+  text-align: center;
+  font-size: 1.7rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* 🔥 Responsive Grid using CSS Magic */
+.toys-list {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* =============== MOBILE (0–575px) =============== */
+@media (max-width: 575px) {
+  .toys-container {
+    padding: 12px;
+  }
+
+  .toys-title {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+  }
+
+  .toys-list {
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* =============== TABLET (576–991px) =============== */
+@media (min-width: 576px) and (max-width: 991px) {
+  .toys-container {
+    padding: 16px;
+  }
+
+  .toys-title {
+    font-size: 1.6rem;
+  }
+
+  .toys-list {
+    gap: 16px;
+  }
+}
+
+/* =============== LAPTOP / DESKTOP (>=992px) =============== */
+@media (min-width: 992px) {
+  .toys-container {
+    padding: 24px;
+  }
+
+  .toys-title {
+    font-size: 1.8rem;
+  }
+
+  .toys-list {
+    gap: 20px;
+  }
+}
