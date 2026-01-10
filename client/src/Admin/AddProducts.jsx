@@ -123,7 +123,7 @@ const Addproduct = () => {
 
     try {
       const response = await axios.post(
-        "https://e-commerce-backend-2isg.onrender.com/api/admin/add-product",
+        "https://e-commerce-backend-mwxg.onrender.com/api/admin/add-product",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );

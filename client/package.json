@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "proxy": "https://e-commerce-backend-2isg.onrender.com",
+  "proxy": "https://e-commerce-backend-mwxg.onrender.com",
   "private": true,
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^7.1.0",

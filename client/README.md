@@ -9,7 +9,7 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [https://e-commerce-p4tj.onrender.com](https://e-commerce-p4tj.onrender.com) to view it in your browser.
+Open [https://e-commerce-frontend-u0z8.onrender.com](https://e-commerce-frontend-u0z8.onrender.com) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
