@@ -6,7 +6,7 @@ import "./Cloth.css";
 const Cloths = () => {
   const [cloths, setCloths] = useState([]);
   const [loading, setLoading] = useState(true);
-  const BASE_IMAGE_URL = "https://e-commerce-backend-mwxg.onrender.com";
+  const BASE_IMAGE_URL = "http://localhost:5000";
 
   useEffect(() => {
     const fetchCloths = async () => {

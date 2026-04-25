@@ -11,7 +11,7 @@ const AdminDeleteProduct = () => {
 
   const fetchProduct = async (id) => {
     try {
-      const response = await axios.get(`https://e-commerce-backend-mwxg.onrender.com/api/admin/product/${id}`);
+      const response = await axios.get(`http://localhost:5000/api/admin/product/${id}`);
       setProduct(response.data);
       setLoading(false);
     } catch (err) {
@@ -28,7 +28,7 @@ const AdminDeleteProduct = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      await axios.delete(`https://e-commerce-backend-mwxg.onrender.com/api/admin/delete-product/${id}`);
+      await axios.delete(`http://localhost:5000/api/admin/delete-product/${id}`);
       alert("Product deleted successfully!");
       navigate("/admin/manage-products");
     } catch (err) {

@@ -6,7 +6,7 @@ import "./HomeAppliances.css";
 const HomeAppliances = () => {
   const [homeAppliances, setHomeAppliances] = useState([]);
   const [loading, setLoading] = useState(true);
-  const BASE_IMAGE_URL = "https://e-commerce-backend-mwxg.onrender.com";
+  const BASE_IMAGE_URL = "http://localhost:5000";
 
   useEffect(() => {
     const fetchHomeAppliances = async () => {

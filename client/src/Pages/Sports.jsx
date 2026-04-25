@@ -4,7 +4,7 @@ import ProductCard from '../components/ProductCard';
 import './Sports.css';
 
 const Sports = () => {
-  const BASE_IMAGE_URL = "https://e-commerce-backend-mwxg.onrender.com";
+  const BASE_IMAGE_URL = "http://localhost:5000";
   const [sportsProducts, setSportsProducts] = useState([]);
 
   useEffect(() => {

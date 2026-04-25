@@ -20,7 +20,7 @@ export default function PaymentSuccess() {
         setErrorMsg("");
 
         const res = await fetch(
-          `https://e-commerce-backend-mwxg.onrender.com/api/order/verify-payment?order_id=${orderId}`
+          `http://localhost:5000/api/order/verify-payment?order_id=${orderId}`
         );
 
         const data = await res.json();

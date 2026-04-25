@@ -23,7 +23,7 @@
 
 // // ---------- CORS CONFIG ----------
 // const allowedOrigins = [
-//   "https://e-commerce-frontend-u0z8.onrender.com",
+//   "http://localhost:3000",
 //   // add other allowed frontends here if needed
 // ];
 
@@ -101,7 +101,7 @@ app.use(express.urlencoded({ extended: true }));
    CORS (SAFE – NO WILDCARDS)
 ================================ */
 const allowedOrigins = [
-  "https://e-commerce-frontend-u0z8.onrender.com",
+  "http://localhost:3000",
 ];
 
 app.use(
