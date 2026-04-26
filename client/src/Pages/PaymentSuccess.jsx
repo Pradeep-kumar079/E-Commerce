@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./PaymentSuccess.css";
+import { useNavigate } from "react-router-dom";
 
 export default function PaymentSuccess() {
   const location = useLocation();
@@ -10,6 +11,7 @@ export default function PaymentSuccess() {
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -45,7 +47,7 @@ export default function PaymentSuccess() {
       <div className="payment-page">
         <div className="payment-card error">
           <h1>No order details found in URL ❌</h1>
-          <button onClick={() => (window.location.href = "/home")}>
+          <button onClick={() => navigate("/home")}>
             Go to Home
           </button>
         </div>
@@ -165,13 +167,13 @@ export default function PaymentSuccess() {
             <div className="actions">
               <button
                 className="primary-btn"
-                onClick={() => (window.location.href = "/home")}
+             onClick={() => navigate("/home")}
               >
                 Continue Shopping
               </button>
               <button
                 className="secondary-btn"
-                onClick={() => (window.location.href = "/orders")}
+               onClick={() => navigate("/orders")}
               >
                 View My Orders
               </button>
