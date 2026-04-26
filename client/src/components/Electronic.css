@@ -1,135 +1,178 @@
-/* ===== Container ===== */
+/* ── FONTS ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Outfit:wght@400;500;600&display=swap');
+
+/* ── SECTION SHELL ───────────────────────────────────── */
 .electronics-container {
   width: 100%;
-  padding: 20px;
+  padding: 36px 32px;
   box-sizing: border-box;
-  margin-top: 5px;
-  background: linear-gradient(135deg, #f9fafb 0%, #e5f0ff 100%);
-  border-radius: 6px;
+  background: #2b1f16;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  font-family: 'Outfit', sans-serif;
 }
 
-/* Header */
+/* ── HEADER ──────────────────────────────────────────── */
 .electronics-header {
-  text-align: center;
-  margin-bottom: 14px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.electronics-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.electronics-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c46c37;
+}
+
+.electronics-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  background: #c46c37;
+  border-radius: 2px;
 }
 
 .electronics-header h2 {
-  font-size: 1.8rem;
-  color: #111827;
-  margin-bottom: 4px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+  text-align: left;
 }
 
 .electronics-header p {
-  font-size: 0.95rem;
-  color: #4b5563;
+  font-size: 0.88rem;
+  color: #c8bdb5;
+  margin: 0;
+  line-height: 1.5;
 }
 
-/* Loading / Empty text */
+.electronics-view-all {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #e89060;
+  text-decoration: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(196, 108, 55, 0.35);
+  background: rgba(196, 108, 55, 0.12);
+  transition: background 0.18s ease, color 0.18s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.electronics-view-all:hover {
+  background: rgba(196, 108, 55, 0.2);
+  color: #f0a070;
+}
+
+.electronics-view-all svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* ── DIVIDER ─────────────────────────────────────────── */
+.electronics-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  margin-bottom: 24px;
+}
+
+/* ── STATES ──────────────────────────────────────────── */
 .electronics-loading,
 .electronics-empty {
   text-align: center;
-  padding: 20px 0;
-  color: #6b7280;
-  font-size: 0.95rem;
+  padding: 40px 0;
+  color: #6b5f52;
+  font-size: 0.9rem;
 }
 
-/* ===== DEFAULT: grid layout (tablet + desktop) ===== */
+.electronics-loading::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(255,255,255,0.07);
+  border-top-color: #c46c37;
+  border-radius: 50%;
+  animation: el-spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes el-spin { to { transform: rotate(360deg); } }
+
+/* ── GRID ────────────────────────────────────────────── */
 .electronics-list {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 }
 
-/* =========================
-   Small Mobile (0–575px)
-   → horizontal row with scroll
-========================= */
+.electronics-list .card-container,
+.electronics-list > * {
+  background: #2e2118;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.18s ease, background 0.18s ease,
+              transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.electronics-list .card-container:hover,
+.electronics-list > *:hover {
+  background: #372619;
+  border-color: rgba(196, 108, 55, 0.28);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(196,108,55,0.12);
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .electronics-container { padding: 28px 20px; }
+  .electronics-list { grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); }
+}
+
+@media (max-width: 767px) {
+  .electronics-container { padding: 22px 16px; }
+  .electronics-header h2 { font-size: 1.55rem; }
+  .electronics-list { grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 12px; }
+}
+
 @media (max-width: 575px) {
-  .electronics-container {
-    padding: 12px;
-    border-radius: 0;
-  }
-
-  .electronics-header h2 {
-    font-size: 1.5rem;
-  }
-
-  .electronics-header p {
-    font-size: 0.9rem;
-  }
-
+  .electronics-container { padding: 18px 12px; }
+  .electronics-header h2 { font-size: 1.35rem; }
+  .electronics-header p { font-size: 0.82rem; }
   .electronics-list {
-    display: flex;              /* row layout */
+    display: flex;
     flex-direction: row;
-    gap: 12px;
     overflow-x: auto;
-    padding-bottom: 10px;
+    gap: 12px;
+    padding-bottom: 8px;
     scroll-snap-type: x mandatory;
-
-    scrollbar-width: none;      /* Firefox hide scrollbar */
+    scrollbar-width: none;
   }
-
-  .electronics-list::-webkit-scrollbar {
-    display: none;              /* Chrome / Safari hide scrollbar */
-  }
-
-  /* Each card acts like a slide */
-  .card-container {
-    flex: 0 0 auto;
-    scroll-snap-align: start;
-  }
-}
-
-/* =========================
-   Larger Mobile / Small Tablet
-   (576–767px)
-========================= */
-@media (min-width: 576px) and (max-width: 767px) {
-  .electronics-container {
-    padding: 16px;
-  }
-
-  .electronics-header h2 {
-    font-size: 1.6rem;
-  }
-
-  .electronics-list {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  }
-}
-
-/* =========================
-   Tablet (768–1023px)
-========================= */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .electronics-container {
-    padding: 18px 22px;
-  }
-
-  .electronics-header h2 {
-    font-size: 1.7rem;
-  }
-
-  .electronics-list {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
-}
-
-/* =========================
-   Laptop & Desktop (>=1024px)
-========================= */
-@media (min-width: 1024px) {
-  .electronics-container {
-    padding: 20px 28px;
-  }
-
-  .electronics-header h2 {
-    font-size: 1.9rem;
-  }
-
-  .electronics-list {
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  }
+  .electronics-list::-webkit-scrollbar { display: none; }
+  .electronics-list .card-container,
+  .electronics-list > * { flex: 0 0 200px; scroll-snap-align: start; }
 }

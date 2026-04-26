@@ -1,73 +1,211 @@
+/* ── FONTS (same as Navbar) ─────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Outfit:wght@400;500;600&display=swap');
+
+/* ── DESIGN TOKENS ───────────────────────────────────── */
+:root {
+  --toys-bg-section:   #2b1f16;
+  --toys-bg-card:      #2e2118;
+  --toys-bg-card-hov:  #372619;
+  --toys-border:       rgba(255, 255, 255, 0.07);
+  --toys-border-hov:   rgba(196, 108, 55, 0.35);
+  --toys-accent:       #c46c37;
+  --toys-accent-light: #e89060;
+  --toys-accent-glow:  rgba(196, 108, 55, 0.12);
+  --toys-text-primary: #ffffff;
+  --toys-text-muted:   #c8bdb5;
+  --toys-text-dim:     #6b5f52;
+  --toys-font-display: 'Playfair Display', serif;
+  --toys-font-body:    'Outfit', sans-serif;
+  --toys-radius:       12px;
+  --toys-radius-sm:    8px;
+  --toys-transition:   0.18s ease;
+}
+
+/* ── SECTION SHELL ───────────────────────────────────── */
 .toys-container {
-  background-color: #fdeef3;
   width: 100%;
-  min-height: 100vh;
-  padding: 20px;
-  overflow-y: auto;
-  border: 1px solid #b2aeaf;
-  border-radius: 6px;
+  padding: 36px 32px;
   box-sizing: border-box;
+  background: var(--toys-bg-section);
+  border-bottom: 1px solid var(--toys-border);
+  font-family: var(--toys-font-body);
+}
+
+/* ── HEADER ──────────────────────────────────────────── */
+.toys-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.toys-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.toys-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--toys-accent);
+}
+
+.toys-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  background: var(--toys-accent);
+  border-radius: 2px;
 }
 
 .toys-title {
-  text-align: center;
-  font-size: 1.7rem;
-  margin-bottom: 20px;
-  color: #333;
+  font-family: var(--toys-font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--toys-text-primary);
+  margin: 0;
+  line-height: 1.2;
+  text-align: left;
 }
 
-/* 🔥 Responsive Grid using CSS Magic */
+.toys-subtitle {
+  font-size: 0.88rem;
+  color: var(--toys-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.toys-view-all {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--toys-accent-light);
+  text-decoration: none;
+  padding: 7px 14px;
+  border-radius: var(--toys-radius-sm);
+  border: 1px solid var(--toys-border-hov);
+  background: var(--toys-accent-glow);
+  transition: background var(--toys-transition), color var(--toys-transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.toys-view-all:hover {
+  background: rgba(196, 108, 55, 0.2);
+  color: #f0a070;
+}
+
+.toys-view-all svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* ── DIVIDER ─────────────────────────────────────────── */
+.toys-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--toys-border);
+  margin-bottom: 24px;
+}
+
+/* ── STATES ──────────────────────────────────────────── */
+.toys-loading,
+.toys-empty {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--toys-text-dim);
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+}
+
+.toys-loading::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--toys-border);
+  border-top-color: var(--toys-accent);
+  border-radius: 50%;
+  animation: toys-spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes toys-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── GRID ────────────────────────────────────────────── */
 .toys-list {
   display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 }
 
-/* =============== MOBILE (0–575px) =============== */
-@media (max-width: 575px) {
-  .toys-container {
-    padding: 12px;
-  }
+/* ── CARD HOVER ──────────────────────────────────────── */
+.toys-list .card-container,
+.toys-list > * {
+  background: var(--toys-bg-card);
+  border: 1px solid var(--toys-border);
+  border-radius: var(--toys-radius);
+  overflow: hidden;
+  transition: border-color var(--toys-transition),
+              background var(--toys-transition),
+              transform 0.2s ease,
+              box-shadow 0.2s ease;
+}
 
-  .toys-title {
-    font-size: 1.4rem;
-    margin-bottom: 12px;
-  }
+.toys-list .card-container:hover,
+.toys-list > *:hover {
+  background: var(--toys-bg-card-hov);
+  border-color: rgba(196, 108, 55, 0.28);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35),
+              0 0 0 1px rgba(196, 108, 55, 0.12);
+}
 
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .toys-container { padding: 28px 20px; }
+  .toys-list { grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); }
+}
+
+@media (max-width: 767px) {
+  .toys-container { padding: 22px 16px; }
+  .toys-title { font-size: 1.55rem; }
   .toys-list {
+    grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
     gap: 12px;
+  }
+}
+
+@media (max-width: 575px) {
+  .toys-container { padding: 18px 12px; }
+  .toys-title { font-size: 1.35rem; }
+  .toys-subtitle { font-size: 0.82rem; }
+  .toys-list {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
   }
-}
-
-/* =============== TABLET (576–991px) =============== */
-@media (min-width: 576px) and (max-width: 991px) {
-  .toys-container {
-    padding: 16px;
-  }
-
-  .toys-title {
-    font-size: 1.6rem;
-  }
-
-  .toys-list {
-    gap: 16px;
-  }
-}
-
-/* =============== LAPTOP / DESKTOP (>=992px) =============== */
-@media (min-width: 992px) {
-  .toys-container {
-    padding: 24px;
-  }
-
-  .toys-title {
-    font-size: 1.8rem;
-  }
-
-  .toys-list {
-    gap: 20px;
+  .toys-list::-webkit-scrollbar { display: none; }
+  .toys-list .card-container,
+  .toys-list > * {
+    flex: 0 0 200px;
+    scroll-snap-align: start;
   }
 }

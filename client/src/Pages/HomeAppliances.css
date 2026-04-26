@@ -1,62 +1,226 @@
-/* ===== Container ===== */
-.home-appliances-container {
-  width: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-  margin-top: 5px;
-  background: linear-gradient(135deg, #fefce8 0%, #e0f2fe 100%);
-  border-radius: 6px;
+/* ── FONTS (same as Navbar) ─────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Outfit:wght@400;500;600&display=swap');
+
+/* ── DESIGN TOKENS (mirrors Navbar palette) ─────────── */
+:root {
+  --ha-bg-deep:      #1c1510;
+  --ha-bg-mid:       #231a13;
+  --ha-bg-section:   #2b1f16;
+  --ha-bg-card:      #2e2118;
+  --ha-bg-card-hov:  #372619;
+  --ha-border:       rgba(255, 255, 255, 0.07);
+  --ha-border-hov:   rgba(196, 108, 55, 0.35);
+  --ha-accent:       #c46c37;
+  --ha-accent-light: #e89060;
+  --ha-accent-glow:  rgba(196, 108, 55, 0.12);
+  --ha-text-primary: #ffffff;
+  --ha-text-muted:   #c8bdb5;
+  --ha-text-dim:     #6b5f52;
+  --ha-font-display: 'Playfair Display', serif;
+  --ha-font-body:    'Outfit', sans-serif;
+  --ha-radius:       12px;
+  --ha-radius-sm:    8px;
+  --ha-transition:   0.18s ease;
 }
 
-/* Header */
+/* ── SECTION SHELL ───────────────────────────────────── */
+.home-appliances-container {
+  width: 100%;
+  padding: 36px 32px;
+  box-sizing: border-box;
+  background: var(--ha-bg-section);
+  border-bottom: 1px solid var(--ha-border);
+  font-family: var(--ha-font-body);
+}
+
+/* ── HEADER ──────────────────────────────────────────── */
 .home-appliances-header {
-  text-align: center;
-  margin-bottom: 14px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.home-appliances-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.home-appliances-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ha-accent);
+}
+
+.home-appliances-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  background: var(--ha-accent);
+  border-radius: 2px;
 }
 
 .home-appliances-header h2 {
-  font-size: 1.8rem;
-  color: #111827;
-  margin-bottom: 4px;
+  font-family: var(--ha-font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--ha-text-primary);
+  margin: 0;
+  line-height: 1.2;
 }
 
 .home-appliances-header p {
-  font-size: 0.95rem;
-  color: #4b5563;
+  font-size: 0.88rem;
+  color: var(--ha-text-muted);
+  margin: 0;
+  line-height: 1.5;
 }
 
-/* Loading / Empty text */
+.home-appliances-view-all {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ha-accent-light);
+  text-decoration: none;
+  padding: 7px 14px;
+  border-radius: var(--ha-radius-sm);
+  border: 1px solid var(--ha-border-hov);
+  background: var(--ha-accent-glow);
+  transition: background var(--ha-transition), color var(--ha-transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.home-appliances-view-all:hover {
+  background: rgba(196, 108, 55, 0.2);
+  color: #f0a070;
+}
+
+.home-appliances-view-all svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* ── DIVIDER ─────────────────────────────────────────── */
+.home-appliances-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--ha-border);
+  margin-bottom: 24px;
+}
+
+/* ── STATES ──────────────────────────────────────────── */
 .home-appliances-loading,
 .home-appliances-empty {
   text-align: center;
-  padding: 20px 0;
-  color: #6b7280;
-  font-size: 0.95rem;
+  padding: 40px 0;
+  color: var(--ha-text-dim);
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
 }
 
-/* ===== DEFAULT: grid layout (tablet + desktop) ===== */
+.home-appliances-loading::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--ha-border);
+  border-top-color: var(--ha-accent);
+  border-radius: 50%;
+  animation: ha-spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes ha-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── GRID ────────────────────────────────────────────── */
 .home-appliances-list {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 }
 
-/* =========================
-   Small Mobile (0–575px)
-   → horizontal row with scroll
-========================= */
-@media (max-width: 575px) {
+/* ── PRODUCT CARD WRAPPER ────────────────────────────── */
+/*
+  These styles wrap whatever <ProductCard> renders.
+  Use .card-container on the wrapper div if needed,
+  or target the card's own root class below.
+*/
+.home-appliances-list .card-container,
+.home-appliances-list > * {
+  background: var(--ha-bg-card);
+  border: 1px solid var(--ha-border);
+  border-radius: var(--ha-radius);
+  overflow: hidden;
+  transition: border-color var(--ha-transition),
+              background var(--ha-transition),
+              transform 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+.home-appliances-list .card-container:hover,
+.home-appliances-list > *:hover {
+  background: var(--ha-bg-card-hov);
+  border-color: rgba(196, 108, 55, 0.28);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35),
+              0 0 0 1px rgba(196, 108, 55, 0.12);
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+
+/* Tablet */
+@media (max-width: 1023px) {
   .home-appliances-container {
-    padding: 12px;
-    border-radius: 0;
+    padding: 28px 20px;
+  }
+
+  .home-appliances-list {
+    grid-template-columns: repeat(auto-fill, minmax(196px, 1fr));
+  }
+}
+
+/* Large mobile → small tablet */
+@media (max-width: 767px) {
+  .home-appliances-container {
+    padding: 22px 16px;
   }
 
   .home-appliances-header h2 {
-    font-size: 1.5rem;
+    font-size: 1.55rem;
+  }
+
+  .home-appliances-list {
+    grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+    gap: 12px;
+  }
+}
+
+/* Small mobile → horizontal scroll */
+@media (max-width: 575px) {
+  .home-appliances-container {
+    padding: 18px 12px;
+  }
+
+  .home-appliances-header h2 {
+    font-size: 1.35rem;
   }
 
   .home-appliances-header p {
-    font-size: 0.9rem;
+    font-size: 0.82rem;
   }
 
   .home-appliances-list {
@@ -64,71 +228,18 @@
     flex-direction: row;
     gap: 12px;
     overflow-x: auto;
-    padding-bottom: 10px;
+    padding-bottom: 8px;
     scroll-snap-type: x mandatory;
-
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
   }
 
   .home-appliances-list::-webkit-scrollbar {
-    display: none; /* Chrome / Safari */
+    display: none;
   }
 
-  .card-container {
-    flex: 0 0 auto;
+  .home-appliances-list .card-container,
+  .home-appliances-list > * {
+    flex: 0 0 200px;
     scroll-snap-align: start;
-  }
-}
-
-/* =========================
-   Larger Mobile / Small Tablet
-   (576–767px)
-========================= */
-@media (min-width: 576px) and (max-width: 767px) {
-  .home-appliances-container {
-    padding: 16px;
-  }
-
-  .home-appliances-header h2 {
-    font-size: 1.6rem;
-  }
-
-  .home-appliances-list {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  }
-}
-
-/* =========================
-   Tablet (768–1023px)
-========================= */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .home-appliances-container {
-    padding: 18px 22px;
-  }
-
-  .home-appliances-header h2 {
-    font-size: 1.7rem;
-  }
-
-  .home-appliances-list {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
-}
-
-/* =========================
-   Laptop & Desktop (>=1024px)
-========================= */
-@media (min-width: 1024px) {
-  .home-appliances-container {
-    padding: 20px 28px;
-  }
-
-  .home-appliances-header h2 {
-    font-size: 1.9rem;
-  }
-
-  .home-appliances-list {
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 }

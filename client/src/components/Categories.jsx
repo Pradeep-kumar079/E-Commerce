@@ -1,70 +1,50 @@
 import React from 'react'
-import './Categories.css';
+import './Categories.css'
+import { Link } from 'react-router-dom'
+
+const categories = [
+  { label: 'Fashion',         img: 'modern1.jpeg',  to: '/products?category=fashion' },
+  { label: 'Electronics',     img: 'gad6.jpeg',     to: '/products?category=electronics' },
+  { label: 'Home Appliances', img: 'app4.jpeg',     to: '/products?category=home-appliances' },
+  { label: 'Books',           img: 'book.jpeg',     to: '/products?category=books' },
+  { label: 'Toys',            img: 'toy2.jpeg',     to: '/products?category=toys' },
+  { label: 'Sports',          img: 'sports.jpeg',   to: '/products?category=sports' },
+  { label: 'Health',          img: 'health.jpeg',   to: '/products?category=health' },
+  { label: 'Beauty',          img: 'beauty.jpeg',   to: '/products?category=beauty' },
+  { label: 'Automotive',      img: 'auto.jpeg',     to: '/products?category=automotive' },
+  { label: 'Grocery',         img: 'grocery.jpeg',  to: '/products?category=grocery' },
+  { label: 'Pet Supplies',    img: 'pet.jpeg',      to: '/products?category=pet-supplies' },
+  { label: 'Music',           img: 'music.jpeg',    to: '/products?category=music' },
+]
 
 const Categories = () => {
   return (
-     <div className="categories-container">
-     <h3>Categories</h3>
-      <div className="categories">
-        <div className="fashion">
-          <img src='modern1.jpeg' alt='Fashion' />
-          <p>Fashion</p>
-        </div>
-        <div className="electronics">
-          <img src='gad6.jpeg' alt='Electronics' />
-          <p>Electronics</p>
-        </div>
-        <div className="home-appliances">
-          <img src='app4.jpeg' alt='Home Appliances' />
-          <p>Home Appli..</p>
-        </div>
-        <div className="books">
-          <img src='book.jpeg' alt='Books' />
-          <p>Books</p>
-        </div>
-        <div className="toys">
-          <img src='toy2.jpeg' alt='Toys' />
-          <p>Toys</p>
-        </div>
-        <div className="sports">
-          <img src='sports.jpeg' alt='Sports' />
-          <p>Sports</p>
+    <section className="cat">
+      <div className="cat__header">
+        <div>
+          <div className="cat__eyebrow">
+            <span className="cat__eyebrow-dot" />
+            Browse by type
           </div>
-        <div className="health">
-          <img src='health.jpeg' alt='Health' />
-          <p>Health</p>
+          <h2 className="cat__title">
+            Shop by <span>category</span>
+          </h2>
         </div>
-        <div className="beauty">
-          <img src='beauty.jpeg' alt='Beauty' />
-          <p>Beauty</p>
-        </div>  
-        <div className="automotive">
-          <img src='auto.jpeg
-          ' alt='Automotive' />
-          <p>Automotive</p>
-        </div>
-        <div className="grocery">
-          <img src='grocery.jpeg
-          ' alt='Grocery' />
-          <p>Grocery</p>
-        </div>
-        <div className="pet-supplies">
-          <img src='pet.jpeg' alt='Pet Supplies' />
-          <p>Pet Supplies</p>
-        </div>
-        <div className="music">
-          <img src='music.jpeg' alt='Music' />
-          <p>Music</p>
-        </div>
-
-
-
-
-
-
-
+        <span className="cat__count">{categories.length} categories</span>
       </div>
-     </div>
+
+      <div className="cat__scroll">
+        {categories.map(({ label, img, to }) => (
+          <Link to={to} className="cat__card" key={label}>
+            <div className="cat__img-wrap">
+              <img src={img} alt={label} loading="lazy" />
+              <div className="cat__overlay" />
+            </div>
+            <div className="cat__label">{label}</div>
+          </Link>
+        ))}
+      </div>
+    </section>
   )
 }
 

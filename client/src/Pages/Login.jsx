@@ -1,129 +1,159 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
-import './Login.css';
+import React, { useState } from 'react'
+import axios from 'axios'
+import './Login.css'
+import { Link, useNavigate } from 'react-router-dom'
+import jwtDecode from 'jwt-decode'
 
 function Login() {
-  const [data, setData] = useState({ email: '', password: '' });
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [data, setData] = useState({ email: '', password: '' })
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+
+  const handleChange = (field) => (e) => setData({ ...data, [field]: e.target.value })
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
+    e.preventDefault()
+    setLoading(true)
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', data);
+      const res = await axios.post('http://localhost:5000/api/auth/login', data)
+      alert('Login Successful')
 
-      alert('Login Successful');
+      const token = res.data.token
+      localStorage.setItem('token', token)
 
-      const token = res.data.token;
-      localStorage.setItem('token', token);
+      const decoded = jwtDecode(token)
+      const userId = res.data.user?._id || decoded.userId || decoded._id
+      localStorage.setItem('userId', userId)
 
-      // Decode token for userId if not in response
-      const decoded = jwtDecode(token);
-      const userId = res.data.user?._id || decoded.userId || decoded._id;
-      localStorage.setItem('userId', userId);
-
-      // Role-based navigation
       if (res.data.user?.role === 'admin' || res.data.user?.isAdmin) {
-        navigate('/admin-dashboard');
+        navigate('/admin-dashboard')
       } else {
-        navigate('/home');
+        navigate('/home')
       }
 
-      setData({ email: '', password: '' });
+      setData({ email: '', password: '' })
     } catch (err) {
       if (err.response) {
-        alert(err.response.data?.msg || 'Login failed');
+        alert(err.response.data?.msg || 'Login failed')
       } else if (err.request) {
-        alert('No response from server');
+        alert('No response from server')
       } else {
-        alert('Error: ' + err.message);
+        alert('Error: ' + err.message)
       }
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
-    <div className="login-back">
-      <form onSubmit={handleSubmit} className="login-card">
-        <h2 className="login-title">Welcome back to ShopMart</h2>
-        <p className="login-subtitle">Please enter your credentials to continue.</p>
+    <div className="login">
+      <form className="login__card" onSubmit={handleSubmit} noValidate>
 
-        <div className="login-layout">
-          {/* LEFT: FORM */}
-          <div className="login-left">
-            <h2 className="login-form-heading">Login</h2>
+        {/* ── Left panel ── */}
+        <div className="login__left">
+          <Link to="/" className="login__logo">
+            <span className="login__logo-dot" />
+            ShopMart
+          </Link>
 
-            <input
-              placeholder="Email"
-              type="email"
-              value={data.email}
-              required
-              onChange={(e) => setData({ ...data, email: e.target.value })}
-            />
-
-            <input
-              type="password"
-              placeholder="Password"
-              value={data.password}
-              required
-              onChange={(e) => setData({ ...data, password: e.target.value })}
-            />
-
-            <div className="login-options">
-              <Link to="/forgot-password" className="forgot-link">
-                Forgot password?
-              </Link>
-            </div>
-
-            <button
-              type="submit"
-              className="login-btn"
-              disabled={loading || !data.email || !data.password}
-            >
-              {loading ? 'Logging in...' : 'Login'}
-            </button>
-
-            <p className="login-register-text">
-              Don’t have an account?{' '}
-              <Link to="/" className="login-register-link">
-                Register
-              </Link>
+          <div className="login__promo">
+            <span className="login__promo-tag">Member access</span>
+            <h2 className="login__promo-heading">
+              Good to have<br />
+              <span>you back.</span>
+            </h2>
+            <p className="login__promo-text">
+              Sign in to continue your seamless shopping experience
+              and pick up right where you left off.
             </p>
-          </div>
-
-          {/* RIGHT: PROMO / DESIGN */}
-          <div className="login-right">
-            <div className="login-wave-bg">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 1440 320"
-                preserveAspectRatio="none"
-              >
-                <path
-                  fill="#ff5500"
-                  fillOpacity="1"
-                  d="M0,32L21.8,58.7C43.6,85,87,139,131,154.7C174.5,171,218,149,262,138.7C305.5,128,349,128,393,106.7C436.4,85,480,43,524,21.3C567.3,0,611,0,655,32C698.2,64,742,128,785,133.3C829.1,139,873,85,916,96C960,107,1004,181,1047,197.3C1090.9,213,1135,171,1178,176C1221.8,181,1265,235,1309,245.3C1352.7,256,1396,224,1418,208L1440,192L1440,0L0,0Z"
-                />
-              </svg>
-            </div>
-
-            <div className="login-quote">
-              <h2>Welcome to ShopMart</h2>
-              <p>Secure login for a smooth shopping experience.</p>
-              <span className="login-small-note">
-                Use your registered email and password to sign in.
-              </span>
+            <hr className="login__promo-divider" />
+            <div className="login__features">
+              {[
+                'Access your orders & wishlist',
+                'Saved addresses & payment',
+                'Exclusive member deals',
+              ].map((f) => (
+                <div className="login__feature" key={f}>
+                  <span className="login__feature-dot" />
+                  {f}
+                </div>
+              ))}
             </div>
           </div>
+
+          <p className="login__register-hint">
+            New here?{' '}
+            <Link to="/">Create an account</Link>
+          </p>
         </div>
+
+        {/* ── Right panel (form) ── */}
+        <div className="login__right">
+          <h1 className="login__heading">Welcome back</h1>
+          <p className="login__subheading">Enter your credentials to sign in.</p>
+
+          {/* Email */}
+          <div className="login__field">
+            <label className="login__label" htmlFor="login-email">Email address</label>
+            <input
+              id="login-email"
+              className="login__input"
+              type="email"
+              placeholder="you@example.com"
+              value={data.email}
+              onChange={handleChange('email')}
+              required
+            />
+          </div>
+
+          {/* Password */}
+          <div className="login__field">
+            <label className="login__label" htmlFor="login-password">Password</label>
+            <input
+              id="login-password"
+              className="login__input"
+              type="password"
+              placeholder="Your password"
+              value={data.password}
+              onChange={handleChange('password')}
+              required
+            />
+          </div>
+
+          {/* Forgot password */}
+          <div className="login__forgot">
+            <Link to="/forgot-password">Forgot password?</Link>
+          </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            className="login__btn-primary"
+            disabled={loading || !data.email || !data.password}
+          >
+            {loading ? 'Signing in...' : 'Sign in'}
+          </button>
+
+          {/* OR */}
+          <div className="login__or">
+            <div className="login__or-line" />
+            <span>or</span>
+            <div className="login__or-line" />
+          </div>
+
+          {/* Google */}
+          <button type="button" className="login__btn-google">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+              alt=""
+            />
+            Continue with Google
+          </button>
+        </div>
+
       </form>
     </div>
-  );
+  )
 }
 
-export default Login;
+export default Login

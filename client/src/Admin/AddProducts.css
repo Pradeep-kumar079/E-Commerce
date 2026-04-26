@@ -1,68 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Outfit:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── PAGE SHELL ── */
 .add-product-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
-  background: #f9f9f9;
+  align-items: flex-start;
+  padding: 40px 20px 60px;
+  background: #120d09;
   min-height: 100vh;
+  font-family: 'Outfit', sans-serif;
 }
 
+/* ── CARD ── */
 .add-product {
-  background: #ffffff;
-  padding: 30px 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: #1c1510;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 36px 36px 40px;
   width: 100%;
-  max-width: 500px;
+  max-width: 560px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
 .add-product h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: #ffffff;
+  margin-bottom: 28px;
   text-align: center;
-  margin-bottom: 25px;
-  color: #333;
 }
 
+/* ── FORM ── */
 .add-product-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 14px;
 }
 
+/* ── ALL INPUTS ── */
 .add-product-form input[type="text"],
 .add-product-form input[type="number"],
-.add-product-form input[type="file"],
 .add-product-form select,
 .add-product-form textarea {
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 15px;
+  width: 100%;
+  padding: 11px 14px;
+  background: #231a13;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  color: #c8bdb5;
   outline: none;
-  transition: border 0.3s ease;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.add-product-form input::placeholder,
+.add-product-form textarea::placeholder {
+  color: #6b5f52;
+}
+
+.add-product-form select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b5f52' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.add-product-form select option {
+  background: #231a13;
+  color: #c8bdb5;
 }
 
 .add-product-form input:focus,
 .add-product-form select:focus,
 .add-product-form textarea:focus {
-  border-color: #007bff;
+  border-color: rgba(196, 108, 55, 0.5);
+  box-shadow: 0 0 0 3px rgba(196, 108, 55, 0.12);
 }
 
 .add-product-form textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 90px;
+  line-height: 1.55;
 }
 
-.add-product-form button {
-  padding: 12px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
+/* ── FILE INPUT ── */
+.add-product-form input[type="file"] {
+  padding: 10px 14px;
+  background: #231a13;
+  border: 1px dashed rgba(196, 108, 55, 0.35);
+  border-radius: 10px;
+  color: #6b5f52;
+  font-size: 13px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: border-color 0.2s;
 }
 
-.add-product-form button:hover {
-  background-color: #0056b3;
+.add-product-form input[type="file"]:hover {
+  border-color: rgba(196, 108, 55, 0.6);
+  color: #c8bdb5;
+}
+
+/* ── DIVIDER between core fields and dynamic attributes ── */
+.add-product-form input[name]:not([type="file"]):not([type="text"]):not([type="number"]):not([name="name"]):not([name="price"]):not([name="stock"]) {
+  border-left: 3px solid rgba(196, 108, 55, 0.4);
+}
+
+/* ── SUBMIT BUTTON ── */
+.add-product-form button[type="submit"] {
+  margin-top: 6px;
+  padding: 12px;
+  background: #c46c37;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(196, 108, 55, 0.35);
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.add-product-form button[type="submit"]:hover {
+  background: #d97d46;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(196, 108, 55, 0.45);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+  .add-product {
+    padding: 24px 18px 30px;
+  }
+
+  .add-product h2 {
+    font-size: 22px;
+  }
 }

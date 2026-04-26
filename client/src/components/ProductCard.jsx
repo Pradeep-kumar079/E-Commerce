@@ -1,98 +1,141 @@
-import React, { useState } from "react";
-import { FaHeart } from "react-icons/fa";
-import "./ProductCard.css";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react'
+import { FaHeart, FaShoppingBag } from 'react-icons/fa'
+import './ProductCard.css'
+import { Link } from 'react-router-dom'
 
-const ProductCard = ({ product, BASE_IMAGE_URL = "http://localhost:5000" }) => {
-  const [liked, setLiked] = useState(false);
-  const [loading, setLoading] = useState(false);
+const ProductCard = ({ product, BASE_IMAGE_URL = 'http://localhost:5000' }) => {
+  const [liked, setLiked] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false)
 
   const handleLike = (e) => {
-    e.preventDefault(); // prevent navigation from Link
-    setLiked((prev) => !prev);
-  };
+    e.preventDefault()
+    setLiked((prev) => !prev)
+  }
 
   const handleAddToCart = async (e) => {
-    e.preventDefault(); // prevent Link navigation
+    e.preventDefault()
     try {
-      setLoading(true);
+      setLoading(true)
 
-      const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/cart/add-product", {
-        method: "POST",
+      const token = localStorage.getItem('token')
+      const res = await fetch('http://localhost:5000/api/cart/add-product', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           productId: product._id,
           attributes: {},
         }),
-      });
+      })
 
-      const data = await res.json();
+      const data = await res.json()
       if (res.ok) {
-        alert("✅ Product added to cart!");
-        console.log("Updated Cart:", data.cart);
+        alert('✅ Product added to cart!')
+        console.log('Updated Cart:', data.cart)
       } else {
-        alert(`❌ ${data.message}`);
+        alert(`❌ ${data.message}`)
       }
     } catch (err) {
-      console.error("Error adding to cart:", err);
-      alert("⚠️ Error adding product to cart");
+      console.error('Error adding to cart:', err)
+      alert('⚠️ Error adding product to cart')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
+
+  const discountPercentage = product.mrp
+    ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
+    : 0
 
   return (
-    <div className="card-container">
-      <Link to={`/product/${product._id}`} className="product-link">
-        <article className="product-card">
-          <div className="product-image-wrapper">
+    <div className="pc__container">
+      <Link to={`/product/${product._id}`} className="pc__link">
+        <article className="pc__card">
+          {/* Image Section */}
+          <div className="pc__image-wrapper">
+            <div className="pc__image-skeleton" style={{ opacity: imageLoaded ? 0 : 1 }} />
             <img
-              src={`${BASE_IMAGE_URL}${product.images?.[0] || ""}`}
+              src={`${BASE_IMAGE_URL}${product.images?.[0] || ''}`}
               alt={product.name}
-              className="product-img"
+              className="pc__img"
+              onLoad={() => setImageLoaded(true)}
             />
-            {product.tag && <span className="product-badge">{product.tag}</span>}
+
+            {/* Badge */}
+            {product.tag && (
+              <span className="pc__badge">
+                {product.tag}
+              </span>
+            )}
+
+            {/* Discount Badge */}
+            {discountPercentage > 0 && (
+              <span className="pc__discount-badge">
+                -{discountPercentage}%
+              </span>
+            )}
+
+            {/* Overlay Actions (hover on desktop) */}
+            <div className="pc__overlay">
+              <button
+                type="button"
+                className={`pc__like-btn ${liked ? 'pc__like-btn--active' : ''}`}
+                onClick={handleLike}
+                aria-label={liked ? 'Remove from favorites' : 'Add to favorites'}
+                title={liked ? 'Favorited' : 'Add to favorites'}
+              >
+                <FaHeart />
+              </button>
+            </div>
           </div>
 
-          <div className="product-content">
-            <h3 className="product-title">{product.name}</h3>
+          {/* Content Section */}
+          <div className="pc__content">
+            <h3 className="pc__title">{product.name}</h3>
 
-            <div className="product-price-row">
-              <span className="product-price">₹{product.price}</span>
+            {/* Price Section */}
+            <div className="pc__price-section">
+              <span className="pc__price">₹{product.price.toLocaleString('en-IN')}</span>
               {product.mrp && (
-                <span className="product-mrp">₹{product.mrp}</span>
+                <span className="pc__mrp">₹{product.mrp.toLocaleString('en-IN')}</span>
               )}
             </div>
 
-            <p className="product-desc">{product.description}</p>
+            {/* Description */}
+            {product.description && (
+              <p className="pc__desc">{product.description}</p>
+            )}
           </div>
 
-          <div className="product-footer">
+          {/* Footer Section */}
+          <div className="pc__footer">
             <button
               type="button"
-              className={`icon-button ${liked ? "liked" : ""}`}
+              className={`pc__like-btn-mobile ${liked ? 'pc__like-btn-mobile--active' : ''}`}
               onClick={handleLike}
+              aria-label={liked ? 'Remove from favorites' : 'Add to favorites'}
             >
               <FaHeart />
             </button>
 
             <button
               type="button"
-              className="add-to-cart-btn"
+              className="pc__add-cart-btn"
               onClick={handleAddToCart}
               disabled={loading}
+              aria-busy={loading}
             >
-              {loading ? "Adding..." : "Add to Cart"}
+              <FaShoppingBag className="pc__cart-icon" />
+              <span>{loading ? 'Adding...' : 'Cart'}</span>
             </button>
           </div>
         </article>
       </Link>
     </div>
-  );
-};
+  )
+}
 
-export default ProductCard;
+export default ProductCard

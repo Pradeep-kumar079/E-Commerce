@@ -1,55 +1,163 @@
-/* ===== Section Container ===== */
-.cloths-section {
-  width: 100%;
-  padding: 20px;
+/* ── CLOTHS SECTION STYLING ──────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Outfit:wght@400;500;600&display=swap');
+
+/* ── RESET ───────────────────────────────────────────────────────── */
+
+.cloths-section *,
+.cloths-section *::before,
+.cloths-section *::after {
   box-sizing: border-box;
-  background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
 }
 
-/* Header text */
+/* ── SECTION CONTAINER ───────────────────────────────────────────── */
+
+.cloths-section {
+  width: 100%;
+  background: #0f0c0a;
+  padding: 48px 32px;
+  font-family: 'Outfit', sans-serif;
+  min-height: 500px;
+}
+
+/* ── HEADER ──────────────────────────────────────────────────────── */
+
 .cloths-header {
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 48px;
+  position: relative;
+}
+
+.cloths-header::after {
+  content: '';
+  width: 40px;
+  height: 2px;
+  background: #c46c37;
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 1px;
 }
 
 .cloths-header h2 {
-  font-size: 1.8rem;
-  margin-bottom: 6px;
-  color: #333;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.5px;
 }
 
 .cloths-header p {
   font-size: 0.95rem;
-  color: #666;
+  color: #c8bdb5;
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0.3px;
 }
 
-/* Loading & Empty states */
+/* ── PRODUCTS GRID (DEFAULT) ─────────────────────────────────────── */
+
+.cloths-list {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  width: 100%;
+  animation: fadeInGrid 0.6s ease-out;
+}
+
+@keyframes fadeInGrid {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-container {
+  animation: fadeInCard 0.6s ease-out;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger animation for cards */
+.card-container:nth-child(1) { animation-delay: 0.05s; }
+.card-container:nth-child(2) { animation-delay: 0.1s; }
+.card-container:nth-child(3) { animation-delay: 0.15s; }
+.card-container:nth-child(4) { animation-delay: 0.2s; }
+.card-container:nth-child(5) { animation-delay: 0.25s; }
+.card-container:nth-child(6) { animation-delay: 0.3s; }
+.card-container:nth-child(n+7) { animation-delay: 0.35s; }
+
+/* ── LOADING & EMPTY STATES ──────────────────────────────────────── */
+
 .cloths-loading,
 .cloths-empty {
   text-align: center;
-  color: #777;
+  color: #6b5f52;
   font-size: 0.95rem;
-  margin-top: 20px;
+  margin-top: 60px;
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
 }
 
-/* ===== DEFAULT: Grid layout (tablet + desktop etc.) ===== */
-.cloths-list {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+.cloths-loading {
+  color: #c46c37;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
-/* =========================
-   Small Mobile (0–575px)
-   → horizontal row with scroll
-   ========================= */
-@media (max-width: 575px) {
+.cloths-empty {
+  color: #c8bdb5;
+}
+
+/* ── RESPONSIVE DESIGN ───────────────────────────────────────────── */
+
+/* Tablet: 768px - 1023px */
+@media (max-width: 1023px) {
   .cloths-section {
-    padding: 12px;
+    padding: 40px 24px;
   }
 
   .cloths-header h2 {
-    font-size: 1.5rem;
+    font-size: 2rem;
+  }
+
+  .cloths-list {
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+/* Smaller Tablet: 576px - 767px */
+@media (max-width: 767px) {
+  .cloths-section {
+    padding: 32px 20px;
+  }
+
+  .cloths-header {
+    margin-bottom: 36px;
+  }
+
+  .cloths-header h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
   }
 
   .cloths-header p {
@@ -57,80 +165,80 @@
   }
 
   .cloths-list {
-    display: flex;               /* row layout */
-    flex-direction: row;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+/* Mobile: 0px - 575px */
+@media (max-width: 575px) {
+  .cloths-section {
+    padding: 24px 16px;
+    min-height: auto;
+  }
+
+  .cloths-header {
+    margin-bottom: 28px;
+  }
+
+  .cloths-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .cloths-header p {
+    font-size: 0.85rem;
+  }
+
+  .cloths-header::after {
+    width: 32px;
+    bottom: -12px;
+  }
+
+  .cloths-list {
     gap: 12px;
-    overflow-x: auto;
-    padding-bottom: 10px;
-
-    /* smooth horizontal scroll */
-    scroll-snap-type: x mandatory;
-
-    /* hide scrollbar */
-    scrollbar-width: none;       /* Firefox */
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
 
-  .cloths-list::-webkit-scrollbar {
-    display: none;               /* Chrome / Safari */
-  }
-
-  /* each card acts like a slide */
-  .card-container {
-    flex: 0 0 auto;     
-    width: 220px;         /* don't shrink */
-    scroll-snap-align: start;
+  .cloths-loading,
+  .cloths-empty {
+    margin-top: 40px;
+    padding: 30px 16px;
+    font-size: 0.9rem;
   }
 }
 
-/* =========================
-   Larger Mobile / Small Tablet
-   (576–767px)
-   ========================= */
-@media (min-width: 576px) and (max-width: 767px) {
+/* Small Mobile: 0px - 400px */
+@media (max-width: 400px) {
   .cloths-section {
-    padding: 16px;
+    padding: 20px 12px;
   }
 
   .cloths-header h2 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 
   .cloths-list {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   }
 }
 
-/* =========================
-   Tablet (768–1023px)
-   ========================= */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .cloths-section {
-    padding: 18px 22px;
-  }
+/* ── SCROLLBAR STYLING (Optional but refined) ──────────────────── */
 
-  .cloths-header h2 {
-    font-size: 1.7rem;
-  }
-
-  .cloths-list {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
+.cloths-section::-webkit-scrollbar {
+  width: 6px;
 }
 
-/* =========================
-   Laptop & Desktop (>=1024px)
-   ========================= */
-@media (min-width: 1024px) {
-  .cloths-section {
-    padding: 20px 32px;
-  }
+.cloths-section::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-  .cloths-header h2 {
-    font-size: 1.9rem;
-  }
+.cloths-section::-webkit-scrollbar-thumb {
+  background: rgba(196, 108, 55, 0.4);
+  border-radius: 3px;
+}
 
-  .cloths-list {
-    gap: 24px;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  }
+.cloths-section::-webkit-scrollbar-thumb:hover {
+  background: rgba(196, 108, 55, 0.6);
 }
