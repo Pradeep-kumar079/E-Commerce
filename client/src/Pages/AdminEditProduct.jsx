@@ -1,87 +1,183 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './AdminPage.css';
+// ===============================
+// FRONTEND (AdminEditProduct.jsx)
+// Added: Edit Existing Images + Upload New Images
+// ===============================
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./AdminPage.css";
 
 const AdminEditProduct = () => {
-  const [product, setProduct] = useState({ name: '', price: 0, description: '', category: '', type: '', stock: 0, attributes: {} });
+  const [product, setProduct] = useState({
+    name: "",
+    price: 0,
+    description: "",
+    category: "",
+    type: "",
+    stock: 0,
+    attributes: {},
+    images: [],
+  });
+
+  const [newImages, setNewImages] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
   const productId = window.location.pathname.split("/").pop();
 
   const fetchProduct = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/admin/product/${id}`);
+      const response = await axios.get(
+        `http://localhost:5000/api/admin/product/${id}`
+      );
+
       setProduct(response.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
+      console.log(error);
     }
   };
 
-  useEffect(() => { fetchProduct(productId); }, [productId]);
+  useEffect(() => {
+    fetchProduct(productId);
+  }, [productId]);
+
+  // Remove existing image
+  const removeOldImage = (index) => {
+    const updatedImages = [...product.images];
+    updatedImages.splice(index, 1);
+
+    setProduct({
+      ...product,
+      images: updatedImages,
+    });
+  };
+
+  // New uploaded images
+  const handleNewImages = (e) => {
+    setNewImages([...e.target.files]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await axios.put(`http://localhost:5000/api/admin/modify-product/${product._id}`, product);
+      const formData = new FormData();
+
+      formData.append("name", product.name);
+      formData.append("price", product.price);
+      formData.append("description", product.description);
+      formData.append("category", product.category);
+      formData.append("type", product.type);
+      formData.append("stock", product.stock);
+      formData.append(
+        "attributes",
+        JSON.stringify(product.attributes)
+      );
+
+      // old images
+      formData.append(
+        "existingImages",
+        JSON.stringify(product.images)
+      );
+
+      // new uploaded images
+      newImages.forEach((img) => {
+        formData.append("images", img);
+      });
+
+      await axios.put(
+        `http://localhost:5000/api/admin/modify-product/${product._id}`,
+        formData
+      );
+
       alert("Product updated successfully");
       navigate("/manage-products");
     } catch (error) {
+      console.log(error);
       alert("Failed to update product");
     }
   };
 
-  if (loading) return <p className="state-loading">Loading product...</p>;
+  if (loading) return <p>Loading product...</p>;
 
   return (
     <div className="admin-page">
       <div className="admin-card">
         <h2>Edit Product</h2>
+
         <form className="edit-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={product.name}
+            onChange={(e) =>
+              setProduct({
+                ...product,
+                name: e.target.value,
+              })
+            }
+            placeholder="Product Name"
+          />
 
-          <div className="form-group">
-            <label>Category</label>
-            <input type="text" value={product.category} onChange={(e) => setProduct({ ...product, category: e.target.value })} />
+          <input
+            type="number"
+            value={product.price}
+            onChange={(e) =>
+              setProduct({
+                ...product,
+                price: e.target.value,
+              })
+            }
+            placeholder="Price"
+          />
+
+          <textarea
+            value={product.description}
+            onChange={(e) =>
+              setProduct({
+                ...product,
+                description: e.target.value,
+              })
+            }
+            placeholder="Description"
+          />
+
+          {/* Existing Images */}
+          <h3>Existing Images</h3>
+
+          <div className="image-preview">
+            {product.images?.map((img, index) => (
+              <div key={index} className="single-image">
+                <img
+                  src={`http://localhost:5000${img}`}
+                  alt="product"
+                  width="100"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => removeOldImage(index)}
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
           </div>
 
-          <div className="form-group">
-            <label>Type</label>
-            <input type="text" value={product.type} onChange={(e) => setProduct({ ...product, type: e.target.value })} />
-          </div>
+          {/* Upload New Images */}
+          <h3>Upload New Images</h3>
 
-          <div className="form-group">
-            <label>Name</label>
-            <input type="text" value={product.name} onChange={(e) => setProduct({ ...product, name: e.target.value })} />
-          </div>
+          <input
+            type="file"
+            multiple
+            onChange={handleNewImages}
+          />
 
-          <div className="form-group">
-            <label>Price (₹)</label>
-            <input type="number" value={product.price} onChange={(e) => setProduct({ ...product, price: e.target.value })} />
-          </div>
-
-          <div className="form-group">
-            <label>Stock</label>
-            <input type="number" value={product.stock} onChange={(e) => setProduct({ ...product, stock: e.target.value })} />
-          </div>
-
-          <div className="form-group">
-            <label>Description</label>
-            <textarea value={product.description} onChange={(e) => setProduct({ ...product, description: e.target.value })} />
-          </div>
-
-          <div className="form-group">
-            <label>Attributes (JSON)</label>
-            <textarea
-              value={JSON.stringify(product.attributes, null, 2)}
-              onChange={(e) => {
-                try { setProduct({ ...product, attributes: JSON.parse(e.target.value) }); } catch {}
-              }}
-              style={{ fontFamily: 'monospace', fontSize: '13px' }}
-            />
-          </div>
-
-          <button type="submit" className="btn-update">Update Product</button>
+          <button type="submit">
+            Update Product
+          </button>
         </form>
       </div>
     </div>
