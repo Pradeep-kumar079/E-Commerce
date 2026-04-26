@@ -11,7 +11,7 @@ const IconArrow = () => (
 );
 
 const Toys = () => {
-  const BASE_IMAGE_URL = "http://localhost:5000";
+  const BASE_IMAGE_URL = "https://e-commerce-backend-mwxg.onrender.com";
   const [toys, setToys] = useState([]);
   const [loading, setLoading] = useState(true);
 

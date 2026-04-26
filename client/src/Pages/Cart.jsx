@@ -4,7 +4,7 @@ import './Cart.css';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = 'https://e-commerce-backend-mwxg.onrender.com';
 
 const getImageUrl = (path) => {
   if (!path) return '';

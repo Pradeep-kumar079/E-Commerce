@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import "./Account.css";
 import { useNavigate } from "react-router-dom";
 
-const BASE_IMAGE_URL = "http://localhost:5000";
+const BASE_IMAGE_URL = "https://e-commerce-backend-mwxg.onrender.com";
 
 /* ── Sidebar icons ── */
 const IcoUser    = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
@@ -30,7 +30,7 @@ const Account = () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) return;
-        const res  = await fetch("http://localhost:5000/api/user/", { headers: { Authorization: `Bearer ${token}` } });
+        const res  = await fetch("https://e-commerce-backend-mwxg.onrender.com/api/user/", { headers: { Authorization: `Bearer ${token}` } });
         const data = await res.json();
         if (!res.ok) return;
         const u = data.user || data;
@@ -49,7 +49,7 @@ const Account = () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) { navigate("/login"); return; }
-      const res  = await fetch("http://localhost:5000/api/user/", { method:"PUT", headers:{ "Content-Type":"application/json", Authorization:`Bearer ${token}` }, body:JSON.stringify(user) });
+      const res  = await fetch("https://e-commerce-backend-mwxg.onrender.com/api/user/", { method:"PUT", headers:{ "Content-Type":"application/json", Authorization:`Bearer ${token}` }, body:JSON.stringify(user) });
       const data = await res.json();
       if (!res.ok) { alert("Failed to update profile"); return; }
       alert("Profile updated successfully!");
@@ -61,7 +61,7 @@ const Account = () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) { navigate("/login"); return; }
-      const response = await fetch("http://localhost:5000/api/user/orders", { headers: { Authorization:`Bearer ${token}` } });
+      const response = await fetch("https://e-commerce-backend-mwxg.onrender.com/api/user/orders", { headers: { Authorization:`Bearer ${token}` } });
       const data = await response.json();
       if (!response.ok) return;
       setOrders(data.orders || []);
@@ -72,7 +72,7 @@ const Account = () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) { navigate("/login"); return; }
-      const response = await fetch("http://localhost:5000/api/cart/", { headers: { Authorization:`Bearer ${token}` } });
+      const response = await fetch("https://e-commerce-backend-mwxg.onrender.com/api/cart/", { headers: { Authorization:`Bearer ${token}` } });
       const data = await response.json();
       setCartItems(data.cart && Array.isArray(data.cart.items) ? data.cart.items : []);
     } catch (err) { console.error(err); }

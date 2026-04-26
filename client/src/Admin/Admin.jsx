@@ -10,7 +10,7 @@ const Admin = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/admin/allproducts");
+      const response = await axios.get("https://e-commerce-backend-mwxg.onrender.com/api/admin/allproducts");
       const grouped = response.data.reduce((acc, product) => {
         if (!acc[product.category]) acc[product.category] = [];
         acc[product.category].push(product);

@@ -13,7 +13,7 @@ const IconArrow = () => (
 const Electronics = () => {
   const [electronics, setElectronics] = useState([]);
   const [loading, setLoading] = useState(true);
-  const BASE_IMAGE_URL = "http://localhost:5000";
+  const BASE_IMAGE_URL = "https://e-commerce-backend-mwxg.onrender.com";
 
   useEffect(() => {
     const fetchElectronics = async () => {

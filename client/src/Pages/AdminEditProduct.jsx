@@ -29,7 +29,7 @@ const AdminEditProduct = () => {
   const fetchProduct = async (id) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/admin/product/${id}`
+        `https://e-commerce-backend-mwxg.onrender.com/api/admin/product/${id}`
       );
 
       setProduct(response.data);
@@ -89,7 +89,7 @@ const AdminEditProduct = () => {
       });
 
       await axios.put(
-        `http://localhost:5000/api/admin/modify-product/${product._id}`,
+        `https://e-commerce-backend-mwxg.onrender.com/api/admin/modify-product/${product._id}`,
         formData
       );
 
@@ -151,7 +151,7 @@ const AdminEditProduct = () => {
             {product.images?.map((img, index) => (
               <div key={index} className="single-image">
                 <img
-                  src={`http://localhost:5000${img}`}
+                  src={`https://e-commerce-backend-mwxg.onrender.com${img}`}
                   alt="product"
                   width="100"
                 />

@@ -11,14 +11,14 @@ const ProductDetails = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [relatedProducts, setRelatedProducts] = useState([]);
 
-  const BASE_IMAGE_URL = "http://localhost:5000";
+  const BASE_IMAGE_URL = "https://e-commerce-backend-mwxg.onrender.com";
 
   // Fetch single product + related products
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/home/all-products/${id}`
+          `https://e-commerce-backend-mwxg.onrender.com/api/home/all-products/${id}`
         );
         if (!res.ok) {
           throw new Error(`Failed to fetch product: ${res.status}`);
@@ -30,7 +30,7 @@ const ProductDetails = () => {
         if (data.category) {
           try {
             const relatedRes = await fetch(
-              `http://localhost:5000/api/home/products?category=${data.category}`
+              `https://e-commerce-backend-mwxg.onrender.com/api/home/products?category=${data.category}`
             );
             if (!relatedRes.ok) {
               throw new Error(
@@ -63,7 +63,7 @@ const ProductDetails = () => {
           return;
         }
 
-        const res = await fetch("http://localhost:5000/api/user/", {
+        const res = await fetch("https://e-commerce-backend-mwxg.onrender.com/api/user/", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -102,7 +102,7 @@ const ProductDetails = () => {
       console.log("User in handleBuy:", user);
       console.log("Product in handleBuy:", product);
 
-      const res = await fetch("http://localhost:5000/api/order/create", {
+      const res = await fetch("https://e-commerce-backend-mwxg.onrender.com/api/order/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

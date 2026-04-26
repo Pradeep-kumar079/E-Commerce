@@ -15,7 +15,7 @@ function Login() {
     e.preventDefault()
     setLoading(true)
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', data)
+      const res = await axios.post('https://e-commerce-backend-mwxg.onrender.com/api/auth/login', data)
       alert('Login Successful')
 
       const token = res.data.token

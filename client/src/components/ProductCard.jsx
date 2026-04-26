@@ -3,7 +3,7 @@ import { FaHeart, FaShoppingBag } from 'react-icons/fa'
 import './ProductCard.css'
 import { Link } from 'react-router-dom'
 
-const ProductCard = ({ product, BASE_IMAGE_URL = 'http://localhost:5000' }) => {
+const ProductCard = ({ product, BASE_IMAGE_URL = 'https://e-commerce-backend-mwxg.onrender.com' }) => {
   const [liked, setLiked] = useState(false)
   const [loading, setLoading] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
@@ -19,7 +19,7 @@ const ProductCard = ({ product, BASE_IMAGE_URL = 'http://localhost:5000' }) => {
       setLoading(true)
 
       const token = localStorage.getItem('token')
-      const res = await fetch('http://localhost:5000/api/cart/add-product', {
+      const res = await fetch('https://e-commerce-backend-mwxg.onrender.com/api/cart/add-product', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

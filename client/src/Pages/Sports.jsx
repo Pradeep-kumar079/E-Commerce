@@ -11,7 +11,7 @@ const IconArrow = () => (
 );
 
 const Sports = () => {
-  const BASE_IMAGE_URL = "http://localhost:5000";
+  const BASE_IMAGE_URL = "https://e-commerce-backend-mwxg.onrender.com";
   const [sportsProducts, setSportsProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 

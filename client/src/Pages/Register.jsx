@@ -12,7 +12,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', data)
+      const res = await axios.post('https://e-commerce-backend-mwxg.onrender.com/api/auth/register', data)
       alert(res.data.msg)
       navigate('/login')
     } catch (err) {
