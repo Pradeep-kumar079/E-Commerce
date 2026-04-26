@@ -48,8 +48,7 @@ const createOrder = async (req, res) => {
       },
       order_meta: {
         return_url:
-          "https://e-commerce-frontend-u0z8.onrender.com
-/payment/success?order_id={order_id}",
+          "https://e-commerce-frontend-u0z8.onrender.com/payment/success?order_id={order_id}",
       },
       order_note: "Order created from MERN E-commerce",
     };
