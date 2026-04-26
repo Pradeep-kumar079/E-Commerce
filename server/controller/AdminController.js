@@ -55,41 +55,88 @@ exports.addProduct = async (req, res) => {
 };
 
 // Modify product
+// ===============================
+// BACKEND CONTROLLER FIX
+// modifyProduct()
+// Added: Existing Images + New Images Merge
+// ===============================
+
 exports.modifyProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, type, category, price, stock, description, brand, attributes } = req.body;
 
-    // Parse attributes safely
+    const {
+      name,
+      type,
+      category,
+      price,
+      stock,
+      description,
+      brand,
+      attributes,
+      existingImages,
+    } = req.body;
+
     let parsedAttributes = {};
     if (attributes) {
       try {
         parsedAttributes = JSON.parse(attributes);
-      } catch (err) {
-        console.warn("Attributes not valid JSON, ignoring:", err.message);
-      }
+      } catch (err) {}
     }
 
-    // Only update images if new files are uploaded
-    const images = req.files && req.files.length > 0
-      ? req.files.map(file => `/uploads/${file.filename}`)
-      : undefined;
+    let oldImages = [];
+    if (existingImages) {
+      try {
+        oldImages = JSON.parse(existingImages);
+      } catch (err) {}
+    }
 
-    // Build update object dynamically
-    const updateData = { name, type, category, price, stock, description, brand, attributes: parsedAttributes };
-    if (images) updateData.images = images;
+    // newly uploaded images
+    const newImages =
+      req.files?.map(
+        (file) => `/uploads/${file.filename}`
+      ) || [];
 
-    const product = await Product.findByIdAndUpdate(id, updateData, { new: true });
+    // merge old + new
+    const finalImages = [...oldImages, ...newImages];
 
-    if (!product) return res.status(404).json({ msg: "Product not found" });
+    const updateData = {
+      name,
+      type,
+      category,
+      price,
+      stock,
+      description,
+      brand,
+      attributes: parsedAttributes,
+      images: finalImages,
+    };
 
-    res.json({ msg: "Product modified successfully", product });
+    const product =
+      await Product.findByIdAndUpdate(
+        id,
+        updateData,
+        { new: true }
+      );
+
+    if (!product) {
+      return res
+        .status(404)
+        .json({ msg: "Product not found" });
+    }
+
+    res.json({
+      msg: "Product updated successfully",
+      product,
+    });
   } catch (err) {
-    console.error("Modify product error:", err);
-    res.status(500).json({ msg: "Server error", error: err.message });
+    console.error(err);
+    res.status(500).json({
+      msg: "Server error",
+      error: err.message,
+    });
   }
 };
-
 // Delete product
 exports.deleteProduct = async (req, res) => {
   try {
