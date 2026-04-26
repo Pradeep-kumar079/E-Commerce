@@ -21,8 +21,11 @@ export default function PaymentSuccess() {
         setLoading(true);
         setErrorMsg("");
 
+        // const res = await fetch(
+        //   `https://e-commerce-backend-mwxg.onrender.com/api/order/verify-payment?order_id=${orderId}`
+        // );
         const res = await fetch(
-          `https://e-commerce-backend-mwxg.onrender.com/api/order/verify-payment?order_id=${orderId}`
+          `https://e-commerce-backend-mwxg.onrender.com/api/order/order-status?order_id=${orderId}`
         );
 
         const data = await res.json();
